@@ -33,7 +33,7 @@ ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
 RUN chgrp -R 0 /usr/local/bin/easy-add && \
-    chmod 777 /usr/local/bin/easy-add
+    chmod g=u /usr/local/bin/easy-add
 
 USER 1001
 
