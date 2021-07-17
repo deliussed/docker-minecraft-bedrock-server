@@ -32,8 +32,8 @@ ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", 
 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
-RUN chgrp -R 0 /usr/local/bin/easy-add && \
-    chmod -R g=u /usr/local/bin/easy-add
+#RUN chgrp -R 0 /usr/local/bin/easy-add && \
+#    chmod -R g=u /usr/local/bin/easy-add
 
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
 
