@@ -33,8 +33,6 @@ RUN chgrp -R 0 /opt && \
     chmod -R g=u /usr/local/bin && \
     chmod -R g=u /data 
     
-USER 1001
-
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
 
 RUN easy-add --var version=0.1.1 --var app=set-property --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
@@ -55,6 +53,6 @@ COPY property-definitions.json /etc/bds-property-definitions.json
 ENV VERSION=LATEST \
     SERVER_PORT=25565
 
-
+USER 1001
 
 HEALTHCHECK --start-period=1m CMD /usr/local/bin/mc-monitor status-bedrock --host 127.0.0.1 --port $SERVER_PORT
