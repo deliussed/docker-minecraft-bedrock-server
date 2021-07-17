@@ -55,4 +55,6 @@ COPY property-definitions.json /etc/bds-property-definitions.json
 ENV VERSION=LATEST \
     SERVER_PORT=25565
 
+USER 1001
+
 HEALTHCHECK --start-period=1m CMD /usr/local/bin/mc-monitor status-bedrock --host 127.0.0.1 --port $SERVER_PORT
