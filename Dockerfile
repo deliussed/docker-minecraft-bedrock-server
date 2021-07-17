@@ -21,13 +21,14 @@ WORKDIR /data
 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
+RUN chmod 777 /usr/local/bin/easy-add
 
 RUN chgrp -R 0 /opt && \
     chgrp -R 0 /data && \
-    chgrp -R 0 /usr/local/bin/easy-add && \
+    chgrp -R 0 /usr/local/bin && \
 #    chgrp -R 0 /usr/local/bin/entrypoint-demoter
     chmod -R g=u /opt && \
-    chmod -R g=u /usr/local/bin/easy-add && \
+    chmod -R g=u /usr/local/bin && \
 #    chmod -R g=u /usr/local/bin/entrypoint-demoter && \
     chmod -R g=u /data 
 
