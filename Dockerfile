@@ -28,9 +28,11 @@ ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-
 
 RUN chgrp -R 0 /opt && \
     chgrp -R 0 /data && \
-    chgrp -R 0 /usr/local/bin && \
+    chgrp -R 0 /usr/local/bin/easy-add && \
+    chgrp -R 0 /usr/local/bin/entrypoint-demoter
     chmod -R g=u /opt && \
-    chmod -R g=u /usr/local/bin && \
+    chmod -R g=u /usr/local/bin/easy-add && \
+    chmod -R g=u /usr/local/bin/entrypoint-demoter && \
     chmod -R g=u /data 
     
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
