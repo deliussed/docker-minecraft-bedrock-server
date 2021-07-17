@@ -34,8 +34,8 @@ RUN chgrp -R 0 /opt && \
 
 USER 1001
 
-#ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
-CMD /opt/bedrock-entry.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+#CMD /opt/bedrock-entry.sh
 
 
 
