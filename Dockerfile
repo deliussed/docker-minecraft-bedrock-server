@@ -19,21 +19,24 @@ VOLUME ["/data"]
 
 WORKDIR /data
 
+RUN chgrp -R 0 /opt && \
+    chgrp -R 0 /data && \
+    chgrp -R 0 /usr/local/bin/easy-add && \
+#    chgrp -R 0 /usr/local/bin/entrypoint-demoter
+    chmod -R g=u /opt && \
+    chmod -R g=u /usr/local/bin/easy-add && \
+#    chmod -R g=u /usr/local/bin/entrypoint-demoter && \
+    chmod -R g=u /data 
 
+USER 1001
 
-ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+#ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
+CMD /opt/bedrock-entry.sh
 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
 
-RUN chgrp -R 0 /opt && \
-    chgrp -R 0 /data && \
-    chgrp -R 0 /usr/local/bin/easy-add && \
-    chgrp -R 0 /usr/local/bin/entrypoint-demoter
-    chmod -R g=u /opt && \
-    chmod -R g=u /usr/local/bin/easy-add && \
-    chmod -R g=u /usr/local/bin/entrypoint-demoter && \
-    chmod -R g=u /data 
+
     
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
 
@@ -55,6 +58,6 @@ COPY property-definitions.json /etc/bds-property-definitions.json
 ENV VERSION=LATEST \
     SERVER_PORT=25565
 
-USER 1001
+
 
 HEALTHCHECK --start-period=1m CMD /usr/local/bin/mc-monitor status-bedrock --host 127.0.0.1 --port $SERVER_PORT
