@@ -26,8 +26,6 @@ RUN chgrp -R 0 /opt && \
     chmod -R g=u /usr/local && \
     chmod -R g=u /data 
 
-USER 1001
-
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
 
 ARG EASY_ADD_VERSION=0.7.0
