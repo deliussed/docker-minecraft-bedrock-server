@@ -19,6 +19,13 @@ VOLUME ["/data"]
 
 WORKDIR /data
 
+RUN chgrp -R 0 /opt && \
+    chgrp -R 0 /data && \
+    chmod -R g=u /opt && \
+    chmod -R g=u /data 
+
+USER 1001
+
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
 
 ARG EASY_ADD_VERSION=0.7.0
@@ -43,6 +50,6 @@ COPY property-definitions.json /etc/bds-property-definitions.json
 # https://minecraft.gamepedia.com/Bedrock_Edition_1.13.0
 # https://minecraft.gamepedia.com/Bedrock_Edition_1.14.0
 ENV VERSION=LATEST \
-    SERVER_PORT=19132
+    SERVER_PORT=25565
 
 HEALTHCHECK --start-period=1m CMD /usr/local/bin/mc-monitor status-bedrock --host 127.0.0.1 --port $SERVER_PORT
