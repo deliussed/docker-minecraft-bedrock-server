@@ -19,22 +19,20 @@ VOLUME ["/data"]
 
 WORKDIR /data
 
-RUN chgrp -R 0 /opt && \
-    chgrp -R 0 /data && \
-    chgrp -R 0 /usr/local && \
-    chmod -R g=u /opt && \
-    chmod -R g=u /usr/local && \
-    chmod -R g=u /data 
-    
-USER 1001
+
 
 ENTRYPOINT ["/usr/local/bin/entrypoint-demoter", "--match", "/data", "--debug", "--stdin-on-term", "stop", "/opt/bedrock-entry.sh"]
 
 ARG EASY_ADD_VERSION=0.7.0
 ADD https://github.com/itzg/easy-add/releases/download/${EASY_ADD_VERSION}/easy-add_linux_${ARCH} /usr/local/bin/easy-add
-RUN chgrp -R 0 /usr/local/bin/easy-add && \
-    chmod g=u /usr/local/bin/easy-add
 
+RUN chgrp -R 0 /opt && \
+    chgrp -R 0 /data && \
+    chgrp -R 0 /usr/local/bin && \
+    chmod -R g=u /opt && \
+    chmod -R g=u /usr/local/bin && \
+    chmod -R g=u /data 
+    
 USER 1001
 
 RUN easy-add --var version=0.2.1 --var app=entrypoint-demoter --file {{.app}} --from https://github.com/itzg/{{.app}}/releases/download/{{.version}}/{{.app}}_{{.version}}_linux_${ARCH}.tar.gz
